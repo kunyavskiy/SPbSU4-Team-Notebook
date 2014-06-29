@@ -1,0 +1,43 @@
+%!PS-Adobe-1.0
+%%BoundingBox: 0 0 501 701
+%%BeginProlog
+%%Pages: 1
+%%EndProlog
+%%Page: 1 1
+/zzz save def
+/width 20 def
+/height 28 def
+
+/mytriangle {
+  newpath
+  0 0 moveto
+  0.5 0.86602540378443864676372317075294 rlineto
+  0.5 -0.86602540378443864676372317075294 rlineto
+  closepath
+  setrgbcolor
+  0.03 setlinewidth
+  stroke
+} def
+
+25 25 scale
+
+newpath
+0 0 moveto
+0 height rlineto
+width 0 rlineto
+0 0 height sub rlineto
+closepath
+clip
+
+height 2 mul {
+  width 2 mul {
+    0.8 0.8 0.8 mytriangle
+    1 0 translate
+  } repeat
+  0 width 2 mul sub 0 translate
+  -0.5 0.86602540378443864676372317075294 translate
+} repeat
+
+showpage
+zzz restore
+%%Trailer

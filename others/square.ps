@@ -1,0 +1,45 @@
+%!PS-Adobe-1.0
+%%BoundingBox: 0 0 501 701
+%%BeginProlog
+%%Pages: 1
+%%EndProlog
+%%Page: 1 1
+
+/zzz save def
+/width 34 def
+/height 47 def
+
+/mysquare {
+  newpath
+  0 0 moveto
+  0 1 rlineto
+  1 0 rlineto
+  0 -1 rlineto
+  closepath
+  setrgbcolor
+  0.03 setlinewidth
+  stroke
+} def
+
+15 15 scale
+
+newpath
+0 0 moveto
+0 height rlineto
+width 0 rlineto
+0 0 height sub rlineto
+closepath
+clip
+
+height {
+  width {
+    0.8 0.8 0.8 mysquare
+    1 0 translate
+  } repeat
+  0 width sub 0 translate
+  0 1 translate
+} repeat
+
+showpage
+zzz restore
+%%Trailer

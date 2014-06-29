@@ -1,0 +1,84 @@
+\subsection{Settings}
+\begin{itemize}
+\item Edit $\to$ Preferences $\to$ View: Display line numbers, Highlight current line, Highligh matching brackets.
+\item Edit $\to$ Preferences $\to$ Editor: Tab Width $=2$, Insert spaces instead of tabs, Enable automatic identation.
+\item Edit $\to$ Preferences $\to$ Fonts\&Colors: Color scheme = Kate. Font = Liberation Mono, Font Size = 14.
+\item Edit $\to$ Preferences $\to$ Plugins: External tools
+\item Edit $\to$ Preferences $\to$ View: Side Panel.
+\item Optional in \texttt{.bashrc}:
+\begin{verbatim}
+PS1="\[\e[32;1m\]\u@\h \[\e[34m\]\W $ \[\e[0m\]
+\end{verbatim}
+\item Start and close gedit, remove some default hotkeys in \texttt{\~{}/.config/gedit/accels} (F9's description can be
+      uncommented and replaced by F11), start gedit again.
+\end{itemize}
+
+\subsection{Makefile}
+\begin{verbatim}
+# Double-check the 'tab' symbol
+# gedit can replace it by himself
+%: %.cpp
+|	g++ -o $@ -O2 -ggdb -std=gnu++0x -DDEBUG -DLOCAL -Wall -Wextra\
+|  -Wshadow -Wno-unused-result -Wsequence-point -static $^
+\end{verbatim}
+
+\subsection{F9}
+
+Tools $\to$ Manage external tools. Use {\color{red}\texttt{bash}}
+
+\begin{verbatim}
+#!/bin/bash
+ulimit -t 10
+ulimit -m 512
+FNAME=$GEDIT_CURRENT_DOCUMENT_NAME
+EXT=${FNAME##*.}
+FNAME=`basename $FNAME .$EXT`
+make -f ~/Documents/Makefile $FNAME || exit
+./$FNAME 2>&1 | head -c 20K
+\end{verbatim}
+
+\subsection{Ctrl+F6}
+
+\begin{verbatim}
+#!/bin/bash
+# `date +%y%m%d`
+CONTDIR=~/Documents
+cd $CONTDIR
+
+PROB=`zenity --entry --title="Problem letter and name"`
+[ -d $PROB ] && exit
+mkdir $PROB || exit
+cd $PROB || exit
+PROB=${PROB:1}
+PROB=${PROB,,}
+cp ../template.cpp $PROB.cpp || exit
+sed -e "s/#define TASKNAME/#define TASKNAME \"$PROB\"/g" $PROB.cpp -i || exit
+touch $PROB.{in,out}
+gedit $PROB.{cpp,in,out}			
+\end{verbatim}
+
+\subsection{Template details:}
+\begin{enumerate}
+\item Six <<\texttt{c}>> includes: \texttt{stdio}, \texttt{stdlib}, \texttt{time}, \texttt{assert}, \texttt{math}, \texttt{string}
+\item Three STL: \texttt{algo}, \texttt{string}, \texttt{vector}
+\item Macro: \texttt{pb}, \texttt{mp}, \texttt{TASKNAME} (without quotes, they're inserted automatically), \texttt{sz}, \texttt{forn}, \texttt{eprintf} (inside \texttt{\#ifdef~DEBUG}), \texttt{TIMESTAMP} (see below)
+\item Typedefs: \texttt{ld}, \texttt{ll}, \texttt{vi}/\texttt{vvi}, \texttt{vb}/\texttt{vvb}, \texttt{pii}
+\item Constants: \texttt{inf}, \texttt{eps} (\texttt{ld}, do not copy-paste \texttt{inf})
+\item
+\begin{verbatim}
+#define TIMESTAMP(msg) eprintf("[ " msg " ] Time = %.3fs\n",\
+                             clock() * 1.0 / CLOCKS_PER_SEC)
+\end{verbatim}
+
+\item \texttt{freopen}s
+\item Special struct: \texttt{\~{}Timestamper() \{ TIMESTAMP(end); \}} with one global instance.
+\end{enumerate}
+
+Additional:
+\begin{enumerate}
+\item Five STL:  \texttt{set}/\texttt{map}, \texttt{deque}/\texttt{queue}, \texttt{list}, commented: \texttt{iostream}
+\item Typedefs: \texttt{vll}, \texttt{pll}/\texttt{pld}
+\end{enumerate}
+
+%\subsection*{}
+%\twocolumn

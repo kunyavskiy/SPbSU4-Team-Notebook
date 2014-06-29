@@ -1,0 +1,46 @@
+%!PS-Adobe-1.0
+%%BoundingBox: 0 0 501 701
+%%BeginProlog
+%%Pages: 1
+%%EndProlog
+%%Page: 1 1
+/zzz save def
+/width 100 3 idiv def
+/height 140 3 idiv def
+
+/myhexagon {
+  newpath
+  0 0 moveto
+  0.5 0.86602540378443864676372317075294 rlineto
+  1.0 0 rlineto
+  0.5 -0.86602540378443864676372317075294 rlineto
+  -0.5 -0.86602540378443864676372317075294 rlineto
+  -1.0 0 rlineto
+  closepath
+  setrgbcolor
+  0.03 setlinewidth
+  stroke
+} def
+
+15 15 scale
+
+newpath
+0 0 moveto
+0 height rlineto
+width 0 rlineto
+0 0 height sub rlineto
+closepath
+clip
+
+height {
+  width {
+    0.8 0.8 0.8 myhexagon
+    1.5 -0.86602540378443864676372317075294 translate
+  } repeat
+  -1.5 width mul 0.86602540378443864676372317075294 width mul translate
+  0 0.86602540378443864676372317075294 2 mul translate
+} repeat
+
+showpage
+zzz restore
+%%Trailer
